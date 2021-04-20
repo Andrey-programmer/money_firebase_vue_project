@@ -58,6 +58,7 @@
 
 <script>
   import {email, required, minLength} from 'vuelidate/lib/validators'
+  import messages from '@/my_utils/messages' 
 
   export default {
     name: 'login',
@@ -77,8 +78,15 @@
         minLength: minLength(6)
       }
     },
+    mounted() {
+      //Если в файле message.js есть значение записаное в адресной строке(например login) то вывожу сообщение согласно его собержанию 
+      if(messages[this.$route.query.message]) {
+        //Вывожу сообщение на экран
+        this.$message(messages[this.$route.query.message])
+      }
+    },
     methods: {
-      onSubmit() {
+      async onSubmit() {
         if (this.$v.$invalid) {
           this.$v.$touch() //Запускаем валидацию
           return
@@ -88,8 +96,13 @@
           email: this.email,
           password: this.password
         }
-        console.log(formData)
-        this.$router.push('/')
+        try {
+          await this.$store.dispatch('login', formData)
+          this.$router.push('/')
+        } catch (error) {
+          // this.$error(error)
+        } 
+        
       }
     }
   }
