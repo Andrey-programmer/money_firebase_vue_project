@@ -14,10 +14,11 @@ export default {
         // Прерываю действие (дальнейший редирект)
         throw error
       }
-    },
-    async logout() {
+    }, 
+    async logout({commit}) {
       try {
         await firebase.auth().signOut()
+        commit('clearInfo')
       } catch (error) {
         commit('setError', error)
         throw error
@@ -37,7 +38,7 @@ export default {
         throw error 
       }
     },
-    //получаю id пользователя
+    //получаю id текущего пользователя
     getUserId() {
       const user = firebase.auth().currentUser
       return user? user.uid : null

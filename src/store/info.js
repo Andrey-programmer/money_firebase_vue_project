@@ -1,0 +1,32 @@
+import firebase from 'firebase/app'
+
+export default {
+  state: {
+    info: {}
+  },
+  getters: {
+    getInfo (s) {
+      return s.info
+    }
+  },
+  mutations: {
+    setInfo(state, info) {
+      state.info = info
+    },
+    clearInfo(state) {
+      state.info = {}
+    }
+  },
+  actions: {
+    async fetchInfo({dispatch, commit}) {
+      try {
+        const uid = await dispatch('getUserId')
+        const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
+        commit('setInfo', info)
+      } catch (error) {
+        throw error
+      }
+      
+    }
+  }
+}

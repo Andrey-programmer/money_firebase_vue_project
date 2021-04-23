@@ -28,6 +28,11 @@
         navOpen: true
       }
     },
+    async mounted() {
+      if (!Object.keys(this.$store.getters.getInfo).length) {
+        await this.$store.dispatch('fetchInfo')
+      }
+    },
     components: {
       Navbar,
       Sidebar
