@@ -23,6 +23,13 @@ export default new Vuex.Store({
       return state.error
     }
   },
+  actions: {
+    async fetchCurrency() {
+      const key = process.env.VUE_APP_FIXER
+      const response = await fetch(`http://data.fixer.io/api/latest?access_key=${key}&symbols=USD,EUR,RUB`)
+      return await response.json()
+    }
+  },
   modules: {
     auth,
     info

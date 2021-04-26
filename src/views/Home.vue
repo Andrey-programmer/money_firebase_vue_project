@@ -3,7 +3,10 @@
     <div class="page-title">
       <h3>Счет</h3>
 
-      <button class="btn waves-effect waves-light btn-small">
+      <button 
+        class="btn waves-effect waves-light btn-small"
+        @click="refrash"
+      >
         <i class="material-icons">refresh</i>
       </button>
     </div>
@@ -14,8 +17,13 @@
       class="row" 
       v-else
     >
-      <home-bill />
-      <home-currency />
+      <home-bill 
+        :rates="currency.rates"
+      />
+      <home-currency 
+        :rates="currency.rates"
+        :date="currency.date"
+      />
     </div>
   </div>
 </template>
@@ -31,6 +39,18 @@ export default {
     return {
       loading: true,
       currency: null
+    }
+  },
+  async mounted() {
+    this.currency = await this.$store.dispatch('fetchCurrency')
+    console.log(this.currency)
+    this.loading = false
+  },
+  methods: {
+    async refrash() {
+      this.loiading = true
+      this.currency = await this.$store.dispatch('fetchCurrency')
+      this.loading = false
     }
   },
   components: { HomeCurrency, HomeBill, Loader }
