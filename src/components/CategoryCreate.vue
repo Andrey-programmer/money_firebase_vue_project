@@ -49,6 +49,7 @@
 
 <script>
 import {required, minValue} from 'vuelidate/lib/validators'
+
 export default {
   data() {
     return {
@@ -65,7 +66,7 @@ export default {
   },
   methods: {
     async onSubmit() {
-      if(this.$v.$invalid) {
+      if(this.$v.$invalid) {  
         this.$v.$touch()
         return
       }
