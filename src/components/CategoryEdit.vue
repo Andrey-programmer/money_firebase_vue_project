@@ -37,7 +37,7 @@
         </div>
         <div class="input-field">
           <input
-            id="limit"
+            id="limit" 
             type="number"
             v-model.number="limit"
             :class="{invalid: $v.limit.$dirty && !$v.limit.minValue}"
@@ -47,7 +47,7 @@
             class="helper-text invalid"
             v-if="$v.limit.$dirty && !$v.limit.minValue"
           >
-            Минимальная величина {{$v.limit.$params.minValue.min}}
+            Минимальное значение {{$v.limit.$params.minValue.min}}
           </span>
         </div>
         <button class="btn waves-effect waves-light" type="submit">
@@ -77,7 +77,7 @@ export default {
       currentCategory: null 
     }
   },
-   validations: {
+  validations: {
     title: {required},
     limit: {minValue: minValue(1000)}
   },

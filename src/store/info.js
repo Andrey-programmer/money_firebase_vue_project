@@ -24,9 +24,22 @@ export default {
         const info = (await firebase.database().ref(`/users/${uid}/info`).once('value')).val()
         commit('setInfo', info)
       } catch (error) {
+        commit('setError', error)
         throw error
       }
-      
+    },
+    async updateInfo({dispatch, commit, getters}, toUpdate) {
+      try {
+        const uid = await dispatch('getUserId')
+
+        //Произвожу слияние геттера store.getInfo и то что пришло с записи
+        const updateData = {...getters.getInfo, ...toUpdate} 
+        await firebase.database().ref(`/users/${uid}/info`).update(updateData)
+        commit('setInfo', updateData)
+      } catch (error) {
+        commit('setError', error)
+        throw error
+      }
     }
   }
 }

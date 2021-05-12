@@ -38,7 +38,6 @@ import CategoryEdit from '../components/CategoryEdit.vue'
   },
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories')
-    console.log(this.categories)
     this.loading = false
   },
   components: { CategoryCreate, CategoryEdit, Loader },
