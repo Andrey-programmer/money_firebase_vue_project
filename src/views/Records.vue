@@ -6,7 +6,13 @@
 
     <Loader v-if="loading"/>
 
-    <p class="center" v-else-if="!categories.length">Категорий пока нет. <router-link to="/categories">Добавить новую категорию</router-link></p>
+    <p 
+    class="center" 
+    v-else-if="!categories.length"
+    >
+      Категорий пока нет. 
+      <router-link to="/categories">Добавить новую категорию</router-link>
+    </p>
 
     <form 
       class="form" 
@@ -148,7 +154,7 @@ import {mapGetters} from 'vuex'
             const bill = this.type === 'income' 
             ? this.getInfo.bill + this.amount
             : this.getInfo.bill - this.amount
-            
+
             await this.$store.dispatch('updateInfo', {bill})
             this.$message('Запись успешно создана')
             this.$v.$reset()// Чищу форму
