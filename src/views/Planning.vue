@@ -19,9 +19,9 @@
       >
         <p>
           <strong>{{category.title}}:</strong>
-          {{category.spend}} из {{category.limit}}
+          {{category.spend | currency}} из {{category.limit | currency}}
         </p>
-        <div class="progress" >
+        <div class="progress" v-tooltip="category.tooltip">
           <div
               class="determinate"
               :class="[category.progressColor]"
@@ -36,6 +36,7 @@
 <script>
 import Loader from '../components/app/Loader.vue'
 import {mapGetters} from 'vuex'
+import currencyFilter from '@/filters/currency.filter'
 
 export default {
   components: { Loader },
@@ -62,13 +63,18 @@ export default {
 
         const spendPercent = spend/category.limit * 100
         const progressPercent = spendPercent > 100 ? 100 : spendPercent
-        const progressColor = spendPercent < 60 ? 'green' : spendPercent < 100 ? 'yellow' : 'red' 
+        const progressColor = spendPercent < 60 
+          ? 'green' : spendPercent < 100 
+          ? 'yellow' : 'red' 
+        const tooltipValue = category.limit - spend
+        const tooltip = `${tooltipValue < 0 ? 'Лимит превышен на' : 'Остаток'} ${currencyFilter(Math.abs(tooltipValue))}`
       
         return {
           ...category, 
           progressPercent,
           progressColor,
-          spend
+          spend,
+          tooltip
         }
       })
       this.loading = false

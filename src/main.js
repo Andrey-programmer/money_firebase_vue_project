@@ -3,6 +3,7 @@ import Vuelidate from 'vuelidate'
 import App from './App.vue'
 import dateFilter from './filters/date.filter'
 import currencyFilter from './filters/currency.filter'
+import tooltip from './directives/tooltip.directive'
 import router from './router'
 import store from './store'
 import messagePlugin from '@/my_utils/message.plugin' //Создал сам
@@ -19,6 +20,7 @@ Vue.use(Vuelidate)
 Vue.use(messagePlugin) //использовал собственный плагин
 Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
+Vue.directive('tooltip', tooltip)
 Vue.component('Loader', Loader)
 
 const firebaseConfig = {
